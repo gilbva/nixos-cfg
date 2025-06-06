@@ -149,7 +149,10 @@
     terraform
     ansible
     chromium
-    neovim
+    slack
+    teams-for-linux
+    kubectl
+    k6
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -195,4 +198,14 @@
     polkitPolicyOwners = [ "gilberto" ];
   };
 
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+
+  };
+
+  programs.tmux = {
+    enable = true;
+  };
 }
