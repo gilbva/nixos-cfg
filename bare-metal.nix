@@ -11,11 +11,13 @@
     ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/nvme1n1p2";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "workstation.gilbva.me"; # Define your hostname.
+  # Use latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  networking.hostName = "gilbva-workstation"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -45,7 +47,7 @@
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
+  services.xserver.enable = false;
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
@@ -61,9 +63,8 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.spice-vdagentd.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -100,19 +101,16 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     corretto21
     corretto17
     corretto11
-    nodejs_23
     nodejs_22
     nodejs_20
-    nodejs_18
-    #python2Full
     python314Full
     go
     dotnet-sdk_9
-    dotnet-sdk_10
     docker
     k3sup
     k3d
@@ -132,9 +130,7 @@
     jetbrains.phpstorm
     jetbrains.datagrip
     gnupg
-    opera
     brave
-    #gimp3
     blender
     inkscape
     audacity
@@ -142,7 +138,6 @@
     vlc
     git
     gcc14
-    python314
     vagrant
     jq
     terraform
@@ -154,15 +149,24 @@
     k6
     pass
     bitwarden-desktop
+    zip
+    unzip
+    discord-ptb
+    # opera
+    # #gimp3
+    # dotnet-sdk_10
+    # nodejs_18
+    # #python2Full
+    # nodejs_23
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.gnupg.agent = {
+    enable = true;
+    # enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
 
@@ -174,24 +178,25 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-  networking = {
-    interfaces.eno1 = {
-      ipv4.addresses = [{
-        address = "192.168.0.2";
-        prefixLength = 24;
-      }];
-    };
-    interfaces.enx5c857e3fcda9 = {
-      ipv4.addresses = [{
-        address = "10.146.101.2";
-        prefixLength = 24;
-      }];
-    };
-    defaultGateway = {
-      address = "192.168.0.1";
-      interface = "eno1";
-    };
-  };
+
+#   networking = {
+#     interfaces.eno1 = {
+#       ipv4.addresses = [{
+#         address = "192.168.0.2";
+#         prefixLength = 24;
+#       }];
+#     };
+#     interfaces.enp102s0u1 = {
+#       ipv4.addresses = [{
+#         address = "10.146.101.2";
+#         prefixLength = 24;
+#       }];
+#     };
+#     defaultGateway = {
+#       address = "192.168.0.1";
+#       interface = "eno1";
+#     };
+#   };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -199,7 +204,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
   # Enable the unfree 1Password packages
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
@@ -226,5 +231,67 @@
 
   programs.tmux = {
     enable = true;
+  };
+
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+      ovmf = {
+        enable = true;
+        packages = [(pkgs.OVMF.override {
+          secureBoot = true;
+          tpmSupport = true;
+        }).fd];
+      };
+    };
+  };
+
+  programs.virt-manager.enable = true;
+
+  users.groups.libvirtd.members = ["gilberto"];
+
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+
+  # Enable OpenGL
+  hardware.graphics = {
+    enable = true;
+  };
+
+  # Load nvidia driver for Xorg and Wayland
+  services.xserver.videoDrivers = ["nvidia"];
+
+  hardware.nvidia = {
+
+    # Modesetting is required.
+    modesetting.enable = true;
+
+    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    # Enable this if you have graphical corruption issues or application crashes after waking
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
+    # of just the bare essentials.
+    powerManagement.enable = false;
+
+    # Fine-grained power management. Turns off GPU when not in use.
+    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+    powerManagement.finegrained = false;
+
+    # Use the NVidia open source kernel module (not to be confused with the
+    # independent third-party "nouveau" open source driver).
+    # Support is limited to the Turing and later architectures. Full list of
+    # supported GPUs is at:
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
+    # Only available from driver 515.43.04+
+    open = false;
+
+    # Enable the Nvidia settings menu,
+	# accessible via `nvidia-settings`.
+    nvidiaSettings = true;
+
+    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 }
