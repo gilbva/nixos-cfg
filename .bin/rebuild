@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp ./bare-metal.nix /etc/nixos/configuration.nix 
+sudo nixos-rebuild switch
