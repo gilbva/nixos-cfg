@@ -63,7 +63,6 @@
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
   services.pipewire = {
     enable = true;
