@@ -152,6 +152,7 @@
     teams-for-linux
     kubectl
     k6
+    pass
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -172,6 +173,24 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+  networking = {
+    interfaces.eno1 = {
+      ipv4.addresses = [{
+        address = "192.168.0.2";
+        prefixLength = 24;
+      }];
+    };
+    interfaces.enx5c857e3fcda9 = {
+      ipv4.addresses = [{
+        address = "10.146.101.2";
+        prefixLength = 24;
+      }];
+    };
+    defaultGateway = {
+      address = "192.168.0.1";
+      interface = "eno1";
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
