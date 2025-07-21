@@ -88,7 +88,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
+      thunderbird
     ];
   };
 
@@ -153,6 +153,7 @@
     unzip
     discord-ptb
     rpi-imager
+    sshpass
     # opera
     # #gimp3
     # dotnet-sdk_10
