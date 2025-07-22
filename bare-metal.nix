@@ -140,6 +140,7 @@
     gcc14
     vagrant
     jq
+    yq-go
     terraform
     ansible
     chromium
@@ -154,6 +155,7 @@
     discord-ptb
     rpi-imager
     sshpass
+    wireguard-tools
     # opera
     # #gimp3
     # dotnet-sdk_10
