@@ -158,6 +158,7 @@
     wireguard-tools
     opentofu
     lens
+    dig
     # opera
     # #gimp3
     # dotnet-sdk_10
