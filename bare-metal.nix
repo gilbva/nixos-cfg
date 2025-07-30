@@ -260,7 +260,8 @@
 
   programs.virt-manager.enable = true;
 
-  users.groups.libvirtd.members = ["gilberto"];
+  users.groups.libvirtd.members = [ "gilberto" ];
+  users.groups.docker.members = [ "gilberto" ];
 
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
