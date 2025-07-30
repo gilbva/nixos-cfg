@@ -156,6 +156,8 @@
     rpi-imager
     sshpass
     wireguard-tools
+    opentofu
+    lens
     # opera
     # #gimp3
     # dotnet-sdk_10
