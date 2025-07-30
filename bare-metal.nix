@@ -159,6 +159,7 @@
     opentofu
     lens
     dig
+    dynamips
     # opera
     # #gimp3
     # dotnet-sdk_10
