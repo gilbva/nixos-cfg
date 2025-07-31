@@ -160,6 +160,9 @@
     lens
     dig
     dynamips
+    talosctl
+    kind
+    kubernetes-helm
     # opera
     # #gimp3
     # dotnet-sdk_10
