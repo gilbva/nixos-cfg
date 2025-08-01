@@ -163,6 +163,7 @@
     talosctl
     kind
     kubernetes-helm
+    openssl
     # opera
     # #gimp3
     # dotnet-sdk_10
