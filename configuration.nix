@@ -168,6 +168,9 @@
     dnsmasq
     spotify
     gimp3
+    nftables
+    iptables
+    openvswitch-dpdk
     # opera
     # dotnet-sdk_10
     # nodejs_18
@@ -193,6 +196,12 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 53 ]; # For TCP DNS queries/zone transfers
+    allowedUDPPorts = [ 53 ]; # For UDP DNS queries
+  };
 
 #   networking = {
 #     interfaces.eno1 = {
@@ -249,6 +258,7 @@
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.vswitch.enable = true;
 
   virtualisation.libvirtd = {
     enable = true;
