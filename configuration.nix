@@ -165,7 +165,7 @@
     kubernetes-helm
     openssl
     cdrkit
-    dnsmasq
+    # dnsmasq
     spotify
     gimp3
     nftables
@@ -291,18 +291,18 @@
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
 
-  services.dnsmasq = {
-    enable = true;
-    alwaysKeepRunning = true;
-    resolveLocalQueries = true;
-    settings = {
-      server = [
-        "8.8.8.8"
-        "8.8.4.4"
-      ];
-      addn-hosts = [ "/etc/nixos/dnsmasq-hosts.txt" ];
-    };
-  };
+  # services.dnsmasq = {
+  #   enable = true;
+  #   alwaysKeepRunning = true;
+  #   resolveLocalQueries = true;
+  #   settings = {
+  #     server = [
+  #       "8.8.8.8"
+  #       "8.8.4.4"
+  #     ];
+  #     addn-hosts = [ "/etc/nixos/dnsmasq-hosts.txt" ];
+  #   };
+  # };
 
   hardware.nvidia = {
 
