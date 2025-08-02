@@ -164,6 +164,8 @@
     kind
     kubernetes-helm
     openssl
+    cdrkit
+    dnsmasq
     # opera
     # #gimp3
     # dotnet-sdk_10
@@ -277,6 +279,13 @@
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
+
+  services.dnsmasq.enable = true;
+  services.dnsmasq.alwaysKeepRunning = true;
+  services.dnsmasq.settings.server = [
+    "8.8.8.8"
+    "8.8.4.4"
+  ];
 
   hardware.nvidia = {
 
