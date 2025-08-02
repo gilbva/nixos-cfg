@@ -281,12 +281,18 @@
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
 
-  services.dnsmasq.enable = true;
-  services.dnsmasq.alwaysKeepRunning = true;
-  services.dnsmasq.settings.server = [
-    "8.8.8.8"
-    "8.8.4.4"
-  ];
+  services.dnsmasq = {
+    enable = true;
+    alwaysKeepRunning = true;
+    resolveLocalQueries = true;
+    settings = {
+      server = [
+        "8.8.8.8"
+        "8.8.4.4"
+      ];
+      addn-hosts = [ "/etc/nixos/dnsmasq-hosts.txt" ];
+    };
+  };
 
   hardware.nvidia = {
 
