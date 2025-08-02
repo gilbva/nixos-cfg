@@ -166,8 +166,9 @@
     openssl
     cdrkit
     dnsmasq
+    spotify
+    gimp3
     # opera
-    # #gimp3
     # dotnet-sdk_10
     # nodejs_18
     # #python2Full
