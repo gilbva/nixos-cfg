@@ -165,12 +165,13 @@
     kubernetes-helm
     openssl
     cdrkit
-    # dnsmasq
     spotify
     gimp3
     nftables
     iptables
     openvswitch-dpdk
+    gh
+    # dnsmasq
     # opera
     # dotnet-sdk_10
     # nodejs_18
