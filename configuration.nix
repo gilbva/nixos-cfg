@@ -174,6 +174,7 @@
     gnumake
     inetutils
     ubridge
+    libcap
     # dnsmasq
     # opera
     # dotnet-sdk_10
