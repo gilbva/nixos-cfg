@@ -171,6 +171,9 @@
     iptables
     openvswitch-dpdk
     gh
+    gnumake
+    inetutils
+    ubridge
     # dnsmasq
     # opera
     # dotnet-sdk_10
