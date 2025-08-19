@@ -175,6 +175,7 @@
     inetutils
     ubridge
     libcap
+    smartmontools
     # dnsmasq
     # opera
     # dotnet-sdk_10
@@ -295,6 +296,17 @@
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
+
+  users.groups.ubridge = {
+  };
+
+  security.wrappers.ubridge = {
+    source = "/run/current-system/sw/bin/ubridge";
+    capabilities = "cap_net_admin,cap_net_raw=ep";
+    owner = "root";
+    group = "ubridge";
+    permissions = "u+rx,g+x";
+  };
 
   # services.dnsmasq = {
   #   enable = true;
