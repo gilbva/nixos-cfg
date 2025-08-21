@@ -177,6 +177,7 @@
     libcap
     smartmontools
     certbot-full
+    wpsoffice-cn
     # dnsmasq
     # opera
     # dotnet-sdk_10
