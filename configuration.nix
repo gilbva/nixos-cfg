@@ -178,6 +178,8 @@
     smartmontools
     certbot-full
     wpsoffice-cn
+    opentelemetry-collector
+    cdrtools
     # dnsmasq
     # opera
     # dotnet-sdk_10
