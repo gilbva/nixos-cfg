@@ -182,6 +182,7 @@
     cdrtools
     dvdplusrwtools
     libisoburn
+    mc
     # dnsmasq
     # opera
     # dotnet-sdk_10
