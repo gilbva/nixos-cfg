@@ -108,6 +108,9 @@
     corretto11
     nodejs_22
     nodejs_20
+    python310Full
+    python311Full
+    python313Full
     python314Full
     go
     dotnet-sdk_9
@@ -183,6 +186,9 @@
     dvdplusrwtools
     libisoburn
     mc
+    rustc
+    cargo
+    rustup
     # dnsmasq
     # opera
     # dotnet-sdk_10
